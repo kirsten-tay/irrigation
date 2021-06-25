@@ -1,6 +1,63 @@
-# irrigation
-a working irrigation system using Arduino uno
+/*
+ARDUINO PINS
+Analog Pins
+A0 - Moisture Sensor
+A1 - Water level Sensor
+A4 - LCD1	
+A5 - LCD2
+
+Digital Pins
+0 - 5V Relay -> Pump
+2 - R on LED
+3 - G on LED
+4 - B on LED
+5 - Temperature Sensor
+*/
+
+#include <DHT.h>
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h> //LCD Library
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+
+int moist_sensor = A0;
+int level_sensor = A1;
+int light_sensor = A3;
+
+#define DHTPIN 5
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE); //Temperature Sensor Config
 
 
-During the process of manual irrigation, there are situations where the right amount of water is not provided to plants or more than necessary water is provided. Both cases pose threats to plants and their growth
-The proposed system is based on the parameters like soil moisture, water level in tank/ storage container and atmospheric temperature. Input from the given parameters, determine the conditions that need to be satisfied for irrigation. With Arduino Uno board as the brain, the system receives information about the soil moisture level using a Soil Moisture Sensor,
+
+void setup() {
+	
+  dht.begin();
+  lcd.begin();
+  lcd.backlight();
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Auto Irrigation");
+  lcd.setCursor(0,1);
+  lcd.print("System");
+  delay(5000);
+
+   pinMode(moist_sensor,INPUT);
+   pinMode(level_sensor,INPUT);
+   pinMode(light_sensor,INPUT);
+
+   pinMode(0,OUTPUT); //5v Relay
+   pinMode(2,OUTPUT); //R on LED
+   pinMode(3,OUTPUT); //G on LED
+   pinMode(4,OUTPUT); //B on LED
+}
+
+void loop() {
+   lcd.clear();
+
+   float temp = dht.readTemperature(); //Read Temperature as Celsuis
+   
+   int moisture = analogRead(moist_sensor);   //Read Moisture Sensor
+   int water_level = analogRead(level_sensor);   //Read Water Level Sensor 
+   int light = analogRead(light_sensor);   //Read Light Sensor
+ 
