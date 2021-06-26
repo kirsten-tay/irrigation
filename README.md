@@ -61,3 +61,35 @@ void loop() {
    int water_level = analogRead(level_sensor);   //Read Water Level Sensor 
    int light = analogRead(light_sensor);   //Read Light Sensor
  
+   digitalWrite(0,LOW);
+   digitalWrite(2,LOW);
+   digitalWrite(3,LOW);
+   digitalWrite(4,LOW);
+   
+  
+   
+  lcd.setCursor(0,0);
+  lcd.print("MOIST LVL:");
+  lcd.setCursor(10,0);
+  lcd.print(moisture);
+  
+  if (moisture < 400) // for Wet Soil
+    { 
+      lcd.setCursor(0,1);
+      lcd.print("Wet SOIL");
+      digitalWrite(0,LOW);
+      }
+      else if (moisture >= 400) // for Dry Soil
+        {
+        lcd.setCursor(0,1);
+        lcd.print("Dry SOIL");
+        if (water_level > 500)
+            {
+              if (temp < 30)
+                  {
+                    digitalWrite(0,HIGH); //irrigate     
+                  } else if (temp > 30)
+                           {
+                            lcd.clear();
+                            lcd.setCursor(0,0);
+
