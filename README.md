@@ -92,4 +92,38 @@ void loop() {
                            {
                             lcd.clear();
                             lcd.setCursor(0,0);
+                            lcd.print("Temp is High");
+                            delay(3000);
+                            }
+             } else if(water_level < 500)
+                      {
+                        lcd.clear();
+                        lcd.setCursor(0,0);
+                        lcd.print("Water is Low");
+                        delay(3000);
+                       }
+        }
 
+    if (digitalRead(0) == HIGH) //status of system
+        {
+          digitalWrite(3, HIGH);
+        }
+          else {
+                 digitalWrite(2, HIGH);        
+               }          
+  delay(3000);
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.print("Air Temp:");
+  lcd.setCursor(9,0);
+  lcd.print(temp);
+  lcd.setCursor(0,1);
+  lcd.print("Water Level:");
+  lcd.setCursor(12,1);
+  lcd.print(water_level);
+     
+ delay(5000);       
+}
+ 
+			    
+			      
