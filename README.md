@@ -123,7 +123,7 @@ void loop() {
   lcd.print(water_level);
      
  delay(5000);       
-}
+} 
  
 			    
 			      
